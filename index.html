@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>MAK-METAL-AGRO | Máquinas Agrícolas de Alta Performance</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet"/>
+
+<style>
+/* ═══════════════════════════════════════
+   THEME VARIABLES
+═══════════════════════════════════════ */
+:root {
+  --green-dark:    #004D10;
+  --green-mid:     #006C18;
+  --green-bright:  #76C112;
+  --green-lime:    #A8D845;
+  --sun-orange:    #FF7800;
+  --sun-yellow:    #FFB800;
+  --transition-theme: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
+}
+
+/* ── DARK THEME (default) ── */
+[data-theme="dark"] {
+  --bg-base:       #0a0f0d;
+  --bg-section:    #0d1510;
+  --bg-alt:        #0b120e;
+  --bg-card:       rgba(255,255,255,0.04);
+  --border-card:   rgba(118,193,18,0.18);
+  --text-primary:  #e8f0e2;
+  --text-secondary:#94a68a;
+  --text-muted:    #5a6e55;
+  --header-bg:     rgba(10,15,13,0.88);
+  --hero-bg:       radial-gradient(ellipse 70% 50% at 50% -10%,rgba(255,184,0,0.12) 0%,transparent 70%),
+                   radial-gradient(ellipse 90% 60% at 50% 110%,rgba(0,108,24,0.22) 0%,transparent 70%),
+                   linear-gradient(180deg,#0d1510 0%,#0a0f0d 100%);
+  --grain-opacity: 0.035;
+  --card-hover-shadow: 0 20px 60px rgba(0,0,0,0.55),0 0 40px rgba(118,193,18,0.12);
+  --sunrise-bg:    linear-gradient(135deg,#0d1510 0%,#0e1a08 25%,#1a2e0a 45%,#3a1a00 70%,#1f0d00 85%,#0d1510 100%);
+  --footer-bg:     #040a06;
+  --stat-card-bg:  rgba(255,255,255,0.04);
+  --input-bg:      rgba(255,255,255,0.06);
+}
+
+/* ── LIGHT THEME ── */
+[data-theme="light"] {
+  --bg-base:       #f4f7f0;
+  --bg-section:    #edf2e8;
+  --bg-alt:        #f9fbf6;
+  --bg-card:       rgba(255,255,255,0.82);
+  --border-card:   rgba(0,108,24,0.22);
+  --text-primary:  #1a2e14;
+  --text-secondary:#3a5430;
+  --text-muted:    #7a9a70;
+  --header-bg:     rgba(244,247,240,0.92);
+  --hero-bg:       radial-gradient(ellipse 70% 50% at 50% -10%,rgba(255,184,0,0.2) 0%,transparent 70%),
+                   radial-gradient(ellipse 90% 60% at 50% 110%,rgba(0,108,24,0.12) 0%,transparent 70%),
+                   linear-gradient(180deg,#edf2e8 0%,#f4f7f0 100%);
+  --grain-opacity: 0.018;
+  --card-hover-shadow: 0 20px 60px rgba(0,0,0,0.12),0 0 40px rgba(0,108,24,0.1);
+  --sunrise-bg:    linear-gradient(135deg,#edf2e8 0%,#e8f0df 25%,#ddf0c8 45%,#ffe8c0 70%,#ffd9a0 85%,#edf2e8 100%);
+  --footer-bg:     #d8e8cc;
+  --stat-card-bg:  rgba(255,255,255,0.72);
+  --input-bg:      rgba(255,255,255,0.9);
+}
+
+/* ═══════════════════════════════════════
+   BASE
+═══════════════════════════════════════ */
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background-color:var(--bg-base);
+  color:var(--text-primary);
+  font-family:'Barlow',sans-serif;
+  overflow-x:hidden;
+  transition:var(--transition-theme);
+}
+
+/* Grain */
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity:var(--grain-opacity);
+  pointer-events:none;z-index:999;
+  transition:opacity 0.5s;
+}
+
+/* ═══════════════════════════════════════
+   TYPOGRAPHY
+═══════════════════════════════════════ */
+.font-display{font-family:'Bebas Neue',cursive;}
+.font-cond{font-family:'Barlow Condensed',sans-serif;}
+
+/* ═══════════════════════════════════════
+   GLASS CARD
+═══════════════════════════════════════ */
+.glass{
+  background:var(--bg-card);
+  border:1px solid var(--border-card);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  transition:var(--transition-theme);
+}
+
+/* ═══════════════════════════════════════
+   THEME TOGGLE BUTTON
+═══════════════════════════════════════ */
+.theme-switcher{
+  display:flex;align-items:center;gap:4px;
+  background:var(--bg-card);
+  border:1px solid var(--border-card);
+  border-radius:99px;
+  padding:4px;
+  backdrop-filter:blur(12px);
+  transition:var(--transition-theme);
+}
+.theme-btn{
+  width:32px;height:32px;border-radius:50%;
+  border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.85rem;
+  background:transparent;
+  color:var(--text-muted);
+  transition:all 0.3s ease;
+}
+.theme-btn.active{
+  background:linear-gradient(135deg,#006C18,#76C112);
+  color:#fff;
+  box-shadow:0 2px 12px rgba(118,193,18,0.4);
+  transform:scale(1.1);
+}
+[data-theme="light"] .theme-btn.active{
+  background:linear-gradient(135deg,#FF7800,#FFB800);
+  color:#fff;
+  box-shadow:0 2px 12px rgba(255,120,0,0.4);
+}
+
+/* ═══════════════════════════════════════
+   HEADER
+═══════════════════════════════════════ */
+header{
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  background:var(--header-bg);
+  border-bottom:1px solid var(--border-card);
+  transition:var(--transition-theme);
+}
+
+/* ═══════════════════════════════════════
+   HERO
+═══════════════════════════════════════ */
+.hero-bg{background:var(--hero-bg);transition:background 0.5s ease;}
+
+/* ═══════════════════════════════════════
+   BUTTONS
+═══════════════════════════════════════ */
+.btn-wpp{
+  background:linear-gradient(135deg,#006C18,#76C112);
+  color:#fff;font-family:'Barlow Condensed',sans-serif;
+  font-weight:700;letter-spacing:0.06em;text-transform:uppercase;
+  transition:all 0.3s ease;
+  box-shadow:0 4px 30px rgba(118,193,18,0.35);
+  text-decoration:none;display:inline-flex;align-items:center;
+}
+.btn-wpp:hover{
+  background:linear-gradient(135deg,#005a13,#8ed620);
+  transform:translateY(-3px) scale(1.02);
+  box-shadow:0 8px 40px rgba(118,193,18,0.5);
+}
+.btn-outline{
+  border:2px solid var(--green-bright);
+  color:var(--green-bright);
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:700;letter-spacing:0.06em;text-transform:uppercase;
+  transition:all 0.3s ease;
+  text-decoration:none;display:inline-flex;align-items:center;
+}
+.btn-outline:hover{
+  background:rgba(118,193,18,0.12);
+  transform:translateY(-3px) scale(1.02);
+}
+
+/* ═══════════════════════════════════════
+   BADGE
+═══════════════════════════════════════ */
+.badge-sun{
+  background:linear-gradient(135deg,#FF9300,#FFB800);
+  color:#1a0a00;font-family:'Barlow Condensed',sans-serif;
+  font-weight:800;letter-spacing:0.04em;text-transform:uppercase;
+  display:inline-flex;align-items:center;gap:8px;
+}
+
+/* ═══════════════════════════════════════
+   DIVIDER
+═══════════════════════════════════════ */
+.divider-leaf{
+  height:3px;
+  background:linear-gradient(90deg,transparent,#006C18,#76C112,#006C18,transparent);
+  border-radius:99px;
+}
+
+/* ═══════════════════════════════════════
+   STATS
+═══════════════════════════════════════ */
+.stat-num{
+  font-family:'Bebas Neue',cursive;
+  font-size:clamp(2.8rem,6vw,4.5rem);line-height:1;
+  background:linear-gradient(135deg,#FF9300,#FFB800);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+
+/* ═══════════════════════════════════════
+   PRODUCT CARDS
+═══════════════════════════════════════ */
+.product-card{
+  background:var(--bg-card);
+  border:1px solid var(--border-card);
+  transition:all 0.4s cubic-bezier(0.23,1,0.32,1);
+  overflow:hidden;
+}
+.product-card:hover{
+  border-color:rgba(118,193,18,0.6);
+  transform:translateY(-8px) scale(1.01);
+  box-shadow:var(--card-hover-shadow);
+}
+.product-card .img-wrap{position:relative;overflow:hidden;}
+.product-card .img-wrap img{
+  transition:transform 0.6s ease;
+  width:100%;height:100%;object-fit:cover;
+}
+.product-card:hover .img-wrap img{transform:scale(1.08);}
+.product-card .tag{
+  background:linear-gradient(90deg,#FF7800,#FFB800);
+  color:#1a0600;font-family:'Barlow Condensed',sans-serif;
+  font-weight:700;font-size:0.7rem;letter-spacing:0.08em;
+  text-transform:uppercase;padding:2px 10px;border-radius:3px;
+}
+
+/* ═══════════════════════════════════════
+   MARQUEE
+═══════════════════════════════════════ */
+.marquee-track{animation:marquee 28s linear infinite;white-space:nowrap;display:inline-flex;}
+@keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+.green-bar{background:linear-gradient(90deg,#004D10,#006C18,#76C112,#006C18,#004D10);}
+
+/* ═══════════════════════════════════════
+   SUNRISE BG
+═══════════════════════════════════════ */
+.sunrise-bg{background:var(--sunrise-bg);transition:background 0.5s ease;}
+
+/* ═══════════════════════════════════════
+   FAB WHATSAPP
+═══════════════════════════════════════ */
+.fab-wpp{
+  position:fixed;bottom:28px;right:24px;
+  width:62px;height:62px;
+  background:linear-gradient(135deg,#128C7E,#25D366);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:1.8rem;color:#fff;
+  box-shadow:0 6px 28px rgba(37,211,102,0.45);
+  z-index:9000;
+  transition:transform 0.3s ease,box-shadow 0.3s ease;
+  animation:wppPulse 2.5s ease-in-out infinite;
+  text-decoration:none;
+}
+.fab-wpp:hover{transform:scale(1.14);box-shadow:0 10px 40px rgba(37,211,102,0.65);}
+@keyframes wppPulse{
+  0%,100%{box-shadow:0 6px 28px rgba(37,211,102,0.45),0 0 0 0 rgba(37,211,102,0.25);}
+  50%{box-shadow:0 6px 28px rgba(37,211,102,0.45),0 0 0 16px rgba(37,211,102,0);}
+}
+
+/* ═══════════════════════════════════════
+   ★ ANIMATIONS
+═══════════════════════════════════════ */
+
+/* Fade up (scroll-triggered) */
+.fade-up{
+  opacity:0;transform:translateY(40px);
+  transition:opacity 0.75s cubic-bezier(0.23,1,0.32,1),
+             transform 0.75s cubic-bezier(0.23,1,0.32,1);
+}
+.fade-up.visible{opacity:1;transform:translateY(0);}
+
+/* Fade in from left */
+.fade-left{
+  opacity:0;transform:translateX(-50px);
+  transition:opacity 0.8s cubic-bezier(0.23,1,0.32,1),
+             transform 0.8s cubic-bezier(0.23,1,0.32,1);
+}
+.fade-left.visible{opacity:1;transform:translateX(0);}
+
+/* Fade in from right */
+.fade-right{
+  opacity:0;transform:translateX(50px);
+  transition:opacity 0.8s cubic-bezier(0.23,1,0.32,1),
+             transform 0.8s cubic-bezier(0.23,1,0.32,1);
+}
+.fade-right.visible{opacity:1;transform:translateX(0);}
+
+/* Scale in */
+.scale-in{
+  opacity:0;transform:scale(0.85);
+  transition:opacity 0.7s ease,transform 0.7s cubic-bezier(0.34,1.56,0.64,1);
+}
+.scale-in.visible{opacity:1;transform:scale(1);}
+
+/* Rotating sun */
+@keyframes rotateSun{to{transform:rotate(360deg);}}
+.sun-rotate{animation:rotateSun 25s linear infinite;}
+.sun-rotate-rev{animation:rotateSun 18s linear infinite reverse;}
+
+/* Floating */
+@keyframes float{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-14px);}
+}
+.float-anim{animation:float 5s ease-in-out infinite;}
+.float-anim-slow{animation:float 7s ease-in-out infinite 1s;}
+
+/* Glow pulse */
+@keyframes glowPulse{
+  0%,100%{box-shadow:0 0 30px rgba(118,193,18,0.2);}
+  50%{box-shadow:0 0 60px rgba(118,193,18,0.45),0 0 100px rgba(118,193,18,0.15);}
+}
+.glow-pulse{animation:glowPulse 3s ease-in-out infinite;}
+
+/* Sun glow pulse */
+@keyframes sunGlowPulse{
+  0%,100%{filter:drop-shadow(0 0 20px rgba(255,184,0,0.4));}
+  50%{filter:drop-shadow(0 0 50px rgba(255,120,0,0.7)) drop-shadow(0 0 80px rgba(255,184,0,0.3));}
+}
+.sun-glow-anim{animation:sunGlowPulse 4s ease-in-out infinite;}
+
+/* Shimmer on hero text */
+@keyframes shimmer{
+  0%{background-position:-200% center;}
+  100%{background-position:200% center;}
+}
+.text-shimmer{
+  background:linear-gradient(90deg,#FF7800 0%,#FFB800 30%,#fff 50%,#FFB800 70%,#FF7800 100%);
+  background-size:200% auto;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  animation:shimmer 4s linear infinite;
+}
+.text-shimmer-green{
+  background:linear-gradient(90deg,#006C18 0%,#76C112 30%,#A8D845 50%,#76C112 70%,#006C18 100%);
+  background-size:200% auto;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  animation:shimmer 5s linear infinite;
+}
+
+/* Counter roll */
+@keyframes countUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+
+/* Card stagger */
+.stagger-1{transition-delay:0.05s!important;}
+.stagger-2{transition-delay:0.12s!important;}
+.stagger-3{transition-delay:0.19s!important;}
+.stagger-4{transition-delay:0.26s!important;}
+.stagger-5{transition-delay:0.33s!important;}
+.stagger-6{transition-delay:0.40s!important;}
+
+/* Particle dots (decorative) */
+@keyframes particleDrift{
+  0%{transform:translate(0,0) scale(1);opacity:0.6;}
+  50%{transform:translate(var(--dx),var(--dy)) scale(1.4);opacity:0.3;}
+  100%{transform:translate(0,0) scale(1);opacity:0.6;}
+}
+.particle{
+  position:absolute;border-radius:50%;
+  background:var(--green-bright);
+  animation:particleDrift var(--dur,6s) ease-in-out infinite;
+  pointer-events:none;
+}
+
+/* Slide in badge */
+@keyframes badgeSlide{from{opacity:0;transform:translateX(-20px);}to{opacity:1;transform:translateX(0);}}
+.badge-animate{animation:badgeSlide 0.8s cubic-bezier(0.34,1.56,0.64,1) 0.3s both;}
+
+/* Hero title lines */
+@keyframes lineReveal{
+  from{opacity:0;transform:translateY(60px) skewY(3deg);}
+  to{opacity:1;transform:translateY(0) skewY(0);}
+}
+.hero-line-1{animation:lineReveal 0.9s cubic-bezier(0.23,1,0.32,1) 0.2s both;}
+.hero-line-2{animation:lineReveal 0.9s cubic-bezier(0.23,1,0.32,1) 0.4s both;}
+.hero-line-3{animation:lineReveal 0.9s cubic-bezier(0.23,1,0.32,1) 0.6s both;}
+.hero-sub{animation:lineReveal 0.9s cubic-bezier(0.23,1,0.32,1) 0.8s both;}
+.hero-cta{animation:lineReveal 0.9s cubic-bezier(0.23,1,0.32,1) 1.0s both;}
+.hero-trust{animation:lineReveal 0.9s cubic-bezier(0.23,1,0.32,1) 1.2s both;}
+
+/* Ripple on button click */
+.btn-wpp,.btn-outline{position:relative;overflow:hidden;}
+.btn-wpp::after,.btn-outline::after{
+  content:'';position:absolute;inset:0;border-radius:inherit;
+  background:rgba(255,255,255,0.15);
+  transform:scaleX(0);transform-origin:left;
+  transition:transform 0.4s ease;
+}
+.btn-wpp:hover::after,.btn-outline:hover::after{transform:scaleX(1);}
+
+/* Typewriter cursor */
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+.cursor{display:inline-block;animation:blink 0.9s step-end infinite;}
+
+/* Icon bounce */
+@keyframes iconBounce{
+  0%,100%{transform:translateY(0) rotate(0deg);}
+  30%{transform:translateY(-8px) rotate(-5deg);}
+  60%{transform:translateY(-4px) rotate(3deg);}
+}
+.feature-card:hover .feature-icon{animation:iconBounce 0.6s ease;}
+
+/* Wave divider */
+.wave-divider svg{display:block;}
+
+/* Highlight bar on section titles */
+.section-title-bar{
+  position:relative;display:inline-block;
+}
+.section-title-bar::after{
+  content:'';position:absolute;left:0;bottom:-6px;
+  height:4px;width:0;
+  background:linear-gradient(90deg,#006C18,#76C112);
+  border-radius:99px;
+  transition:width 1s cubic-bezier(0.23,1,0.32,1);
+}
+.section-title-bar.visible::after{width:100%;}
+
+/* Light theme text overrides */
+[data-theme="light"] .text-slate-300{color:#3a5430!important;}
+[data-theme="light"] .text-slate-400{color:#5a7a50!important;}
+[data-theme="light"] .text-slate-500{color:#7a9a70!important;}
+[data-theme="light"] .text-slate-600{color:#8aaa80!important;}
+[data-theme="light"] .text-white{color:#1a2e14!important;}
+[data-theme="light"] header{border-bottom-color:rgba(0,108,24,0.2);}
+[data-theme="light"] .green-bar{background:linear-gradient(90deg,#004D10,#006C18,#76C112,#006C18,#004D10);}
+
+/* Check item */
+.check-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;}
+.check-item i{color:var(--green-bright);margin-top:3px;flex-shrink:0;}
+
+/* Scroll indicator */
+@keyframes scrollBounce{
+  0%,100%{transform:translateY(0);opacity:1;}
+  50%{transform:translateY(8px);opacity:0.5;}
+}
+.scroll-indicator{animation:scrollBounce 1.8s ease-in-out infinite;}
+
+/* Progress bar animation */
+@keyframes progressFill{from{width:0;}to{width:var(--target-width);}}
+.progress-bar{
+  height:6px;border-radius:99px;
+  background:linear-gradient(90deg,#006C18,#76C112);
+  width:0;animation:progressFill 1.5s cubic-bezier(0.23,1,0.32,1) forwards;
+}
+
+/* Tilt on hover (JS) */
+.tilt-card{transition:transform 0.2s ease,box-shadow 0.2s ease;}
+</style>
+
+<script>
+  tailwind.config={theme:{extend:{colors:{
+    'green-dark':'#004D10','green-mid':'#006C18',
+    'green-bright':'#76C112','green-lime':'#A8D845',
+    'sun-orange':'#FF7800','sun-yellow':'#FFB800'
+  }}}}
+</script>
+</head>
+
+<body>
+
+<!-- ══════════════════════════════════════
+     FLOATING WHATSAPP
+══════════════════════════════════════ -->
+<a href="https://wa.me/5544991537877" target="_blank" rel="noopener" class="fab-wpp" aria-label="WhatsApp">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+<!-- ══════════════════════════════════════
+     PARTICLES (decorative)
+══════════════════════════════════════ -->
+<div id="particles" style="position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden;"></div>
+
+<!-- ══════════════════════════════════════
+     HEADER
+══════════════════════════════════════ -->
+<header class="sticky top-0 z-50 py-3 px-4 md:px-8">
+  <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
+
+    <!-- Logo -->
+    <a href="#inicio" class="flex items-center gap-3 group" style="text-decoration:none;">
+      <div class="relative">
+        <svg viewBox="0 0 60 60" class="w-11 h-11 sun-glow-anim" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="hSunG" cx="50%" cy="100%" r="80%">
+              <stop offset="0%" stop-color="#FF7800"/><stop offset="100%" stop-color="#FFB800"/>
+            </radialGradient>
+          </defs>
+          <g stroke="#FFB800" stroke-width="2.2" stroke-linecap="round" opacity="0.85" class="sun-rotate">
+            <line x1="30" y1="4"  x2="30" y2="10"/>
+            <line x1="49" y1="11" x2="45" y2="15"/>
+            <line x1="56" y1="30" x2="50" y2="30"/>
+            <line x1="11" y1="11" x2="15" y2="15"/>
+            <line x1="4"  y1="30" x2="10" y2="30"/>
+            <line x1="43" y1="5"  x2="41" y2="11"/>
+            <line x1="17" y1="5"  x2="19" y2="11"/>
+          </g>
+          <path d="M10 38 Q30 16 50 38 Z" fill="url(#hSunG)"/>
+          <ellipse cx="30" cy="37" rx="20" ry="8" fill="url(#hSunG)"/>
+          <path d="M8 44 Q20 40 30 44 Q40 48 52 44" stroke="#76C112" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <path d="M10 48 Q22 44 30 48 Q40 52 50 48" stroke="#A8D845" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.6"/>
+        </svg>
+      </div>
+      <div>
+        <p class="font-display text-xl leading-none" style="color:var(--text-primary);letter-spacing:0.08em;transition:color 0.5s;">MAK-METAL-AGRO</p>
+        <p class="font-cond text-xs tracking-[0.18em] uppercase" style="color:var(--green-bright);transition:color 0.5s;">Máquinas Agrícolas · Matão-SP</p>
+      </div>
+    </a>
+
+    <!-- Nav + Theme switcher -->
+    <div class="flex items-center gap-4">
+      <!-- Desktop nav -->
+      <nav class="hidden lg:flex items-center gap-6 font-cond font-600 text-sm tracking-wider uppercase" style="color:var(--text-secondary);">
+        <a href="#sobre"       class="hover:text-green-bright transition-colors duration-300 relative group" style="text-decoration:none;">
+          Sobre
+          <span class="absolute -bottom-1 left-0 h-0.5 w-0 bg-green-bright transition-all duration-300 group-hover:w-full rounded"></span>
+        </a>
+        <a href="#produtos"    class="hover:text-green-bright transition-colors duration-300 relative group" style="text-decoration:none;">
+          Produtos
+          <span class="absolute -bottom-1 left-0 h-0.5 w-0 bg-green-bright transition-all duration-300 group-hover:w-full rounded"></span>
+        </a>
+        <a href="#diferenciais" class="hover:text-green-bright transition-colors duration-300 relative group" style="text-decoration:none;">
+          Diferenciais
+          <span class="absolute -bottom-1 left-0 h-0.5 w-0 bg-green-bright transition-all duration-300 group-hover:w-full rounded"></span>
+        </a>
+        <a href="#contato"     class="hover:text-green-bright transition-colors duration-300 relative group" style="text-decoration:none;">
+          Contato
+          <span class="absolute -bottom-1 left-0 h-0.5 w-0 bg-green-bright transition-all duration-300 group-hover:w-full rounded"></span>
+        </a>
+      </nav>
+
+      <!-- Theme switcher -->
+      <div class="theme-switcher" title="Trocar tema">
+        <button class="theme-btn active" id="btn-dark"  onclick="setTheme('dark')"  title="Tema Escuro">
+          <i class="fas fa-moon"></i>
+        </button>
+        <button class="theme-btn" id="btn-light" onclick="setTheme('light')" title="Tema Claro">
+          <i class="fas fa-sun"></i>
+        </button>
+        <button class="theme-btn" id="btn-auto"  onclick="setTheme('auto')"  title="Automático (dispositivo)">
+          <i class="fas fa-circle-half-stroke"></i>
+        </button>
+      </div>
+
+      <!-- WhatsApp CTA -->
+      <a href="https://wa.me/5544991537877" target="_blank" rel="noopener"
+         class="btn-wpp flex items-center gap-2 px-4 py-2 rounded-xl text-sm whitespace-nowrap">
+        <i class="fab fa-whatsapp text-base"></i>
+        <span class="hidden sm:inline">Falar com Consultor</span>
+        <span class="sm:hidden">WhatsApp</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════
+     HERO
+══════════════════════════════════════ -->
+<section class="hero-bg relative min-h-screen flex flex-col justify-center overflow-hidden" id="inicio">
+
+  <!-- Animated radial glow -->
+  <div class="absolute top-0 left-1/2 -translate-x-1/2 pointer-events-none" style="width:900px;height:600px;top:-10%;">
+    <div style="width:100%;height:100%;background:radial-gradient(ellipse,rgba(255,184,0,0.1) 0%,transparent 65%);animation:glowPulse 5s ease-in-out infinite;"></div>
+  </div>
+
+  <!-- Particle field -->
+  <div id="hero-particles" class="absolute inset-0 pointer-events-none overflow-hidden"></div>
+
+  <!-- Rotating decorative rings -->
+  <div class="absolute inset-0 flex items-center justify-center pointer-events-none" style="top:-5%;">
+    <svg class="sun-rotate opacity-[0.07]" style="width:600px;height:600px;" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+      <g stroke="#FFB800" stroke-width="1.5" stroke-linecap="round">
+        <line x1="300" y1="20"  x2="300" y2="100"/>
+        <line x1="450" y1="50"  x2="410" y2="120"/>
+        <line x1="550" y1="150" x2="480" y2="190"/>
+        <line x1="580" y1="300" x2="500" y2="300"/>
+        <line x1="550" y1="450" x2="480" y2="410"/>
+        <line x1="450" y1="550" x2="410" y2="480"/>
+        <line x1="300" y1="580" x2="300" y2="500"/>
+        <line x1="150" y1="550" x2="190" y2="480"/>
+        <line x1="50"  y1="450" x2="120" y2="410"/>
+        <line x1="20"  y1="300" x2="100" y2="300"/>
+        <line x1="50"  y1="150" x2="120" y2="190"/>
+        <line x1="150" y1="50"  x2="190" y2="120"/>
+      </g>
+    </svg>
+  </div>
+  <div class="absolute inset-0 flex items-center justify-center pointer-events-none" style="top:-5%;">
+    <svg class="sun-rotate-rev opacity-[0.05]" style="width:800px;height:800px;" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="400" cy="400" r="380" stroke="#76C112" stroke-width="1" fill="none" stroke-dasharray="8 16"/>
+    </svg>
+  </div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-4 md:px-8 py-20 md:py-28 grid lg:grid-cols-2 gap-12 items-center">
+
+    <!-- Left copy -->
+    <div>
+      <div class="badge-sun badge-animate inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm mb-8 shadow-lg">
+        <i class="fas fa-sun"></i>
+        <span>Tecnologia Desenvolvida em Matão-SP · Presença Nacional</span>
+      </div>
+
+      <div style="overflow:hidden;margin-bottom:4px;">
+        <h1 class="font-display leading-none hero-line-1" style="font-size:clamp(3.8rem,10vw,8rem);color:var(--text-primary);">BOM DIA,</h1>
+      </div>
+      <div style="overflow:hidden;margin-bottom:4px;">
+        <h1 class="font-display leading-none hero-line-2 text-shimmer" style="font-size:clamp(3.8rem,10vw,8rem);">BOA TARDE,</h1>
+      </div>
+      <div style="overflow:hidden;margin-bottom:16px;">
+        <h1 class="font-display leading-none hero-line-3 text-shimmer-green" style="font-size:clamp(3.8rem,10vw,8rem);">BOA NOITE!</h1>
+      </div>
+
+      <div class="divider-leaf w-36 mb-8 hero-line-3"></div>
+
+      <p class="font-cond text-xl md:text-2xl font-600 leading-snug mb-10 max-w-xl hero-sub" style="color:var(--text-secondary);font-family:'Barlow Condensed',sans-serif;">
+        A força e a robustez dos implementos <strong style="color:var(--text-primary);">MAK-METAL-AGRO</strong> ao lado do produtor rural,
+        <em class="not-italic" style="color:#FF9300;">de sol a sol.</em>
+      </p>
+
+      <div class="flex flex-wrap gap-4 hero-cta">
+        <a href="https://wa.me/5544991537877" target="_blank" rel="noopener"
+           class="btn-wpp flex items-center gap-3 px-7 py-4 rounded-xl text-base">
+          <i class="fab fa-whatsapp text-xl"></i>
+          Falar com um Consultor
+        </a>
+        <a href="#produtos" class="btn-outline flex items-center gap-2 px-7 py-4 rounded-xl text-base">
+          <i class="fas fa-tractor"></i>
+          Ver Implementos
+        </a>
+      </div>
+
+      <div class="flex flex-wrap gap-6 mt-10 text-sm font-cond font-600 tracking-wide uppercase hero-trust" style="font-family:'Barlow Condensed',sans-serif;color:var(--text-muted);">
+        <span class="flex items-center gap-2"><i class="fas fa-check-circle" style="color:#76C112;"></i> +20 Anos de Mercado</span>
+        <span class="flex items-center gap-2"><i class="fas fa-check-circle" style="color:#76C112;"></i> Presença em 8 Estados</span>
+        <span class="flex items-center gap-2"><i class="fas fa-check-circle" style="color:#76C112;"></i> Suporte Pós-Venda</span>
+      </div>
+    </div>
+
+    <!-- Right: Animated Sun Visual -->
+    <div class="flex justify-center lg:justify-end">
+      <div class="relative float-anim">
+        <!-- Outer glow ring -->
+        <div class="absolute inset-0 rounded-full glow-pulse" style="transform:scale(1.25);background:radial-gradient(ellipse,rgba(255,184,0,0.15) 0%,transparent 70%);"></div>
+
+        <svg viewBox="0 0 380 380" class="w-64 h-64 md:w-96 md:h-96 sun-glow-anim relative" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="bigSunG2" cx="50%" cy="70%" r="70%">
+              <stop offset="0%"   stop-color="#FF7800"/>
+              <stop offset="60%"  stop-color="#FFB800"/>
+              <stop offset="100%" stop-color="#FFE066"/>
+            </radialGradient>
+            <radialGradient id="glowG2" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="rgba(255,180,0,0.16)"/>
+              <stop offset="100%" stop-color="rgba(255,180,0,0)"/>
+            </radialGradient>
+            <linearGradient id="fieldG" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%"   stop-color="#004D10"/>
+              <stop offset="40%"  stop-color="#76C112"/>
+              <stop offset="100%" stop-color="#A8D845"/>
+            </linearGradient>
+          </defs>
+          <!-- Background circle -->
+          <circle cx="190" cy="190" r="185" fill="url(#glowG2)"/>
+          <!-- Slow outer rays -->
+          <g stroke="#FFB800" stroke-width="2.5" stroke-linecap="round" opacity="0.5" style="transform-origin:190px 190px;" class="sun-rotate">
+            <line x1="190" y1="15"  x2="190" y2="55"/>
+            <line x1="280" y1="38"  x2="261" y2="72"/>
+            <line x1="340" y1="100" x2="307" y2="118"/>
+            <line x1="365" y1="190" x2="325" y2="190"/>
+            <line x1="340" y1="280" x2="307" y2="262"/>
+            <line x1="280" y1="342" x2="261" y2="308"/>
+            <line x1="190" y1="365" x2="190" y2="325"/>
+            <line x1="100" y1="342" x2="119" y2="308"/>
+            <line x1="40"  y1="280" x2="73"  y2="262"/>
+            <line x1="15"  y1="190" x2="55"  y2="190"/>
+            <line x1="40"  y1="100" x2="73"  y2="118"/>
+            <line x1="100" y1="38"  x2="119" y2="72"/>
+          </g>
+          <!-- Fast inner rays -->
+          <g stroke="#FFE066" stroke-width="1.5" stroke-linecap="round" opacity="0.3" style="transform-origin:190px 190px;" class="sun-rotate-rev">
+            <line x1="190" y1="55"  x2="190" y2="80"/>
+            <line x1="245" y1="72"  x2="232" y2="93"/>
+            <line x1="307" y1="135" x2="286" y2="148"/>
+            <line x1="325" y1="190" x2="300" y2="190"/>
+            <line x1="100" y1="72"  x2="113" y2="93"/>
+            <line x1="55"  y1="135" x2="74"  y2="148"/>
+            <line x1="55"  y1="190" x2="80"  y2="190"/>
+          </g>
+          <!-- Sun body -->
+          <path d="M55 240 Q190 130 325 240 Z" fill="url(#bigSunG2)"/>
+          <ellipse cx="190" cy="238" rx="135" ry="58" fill="url(#bigSunG2)"/>
+          <!-- Horizon -->
+          <line x1="35" y1="238" x2="345" y2="238" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+          <!-- Field waves -->
+          <path d="M25 268 Q100 248 190 268 Q280 288 355 268" stroke="url(#fieldG)" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+          <path d="M25 283 Q100 263 190 280 Q280 297 355 280" stroke="#76C112" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.7"/>
+          <path d="M25 298 Q100 278 190 292 Q280 306 355 292" stroke="#006C18" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.5"/>
+          <path d="M25 312 Q100 294 190 306 Q280 318 355 306" stroke="#004D10" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.3"/>
+        </svg>
+
+        <!-- Floating chips -->
+        <div class="float-anim-slow glass absolute -top-5 -right-5 px-3 py-2 rounded-xl text-xs font-cond font-700 tracking-wide"
+             style="font-family:'Barlow Condensed',sans-serif;color:#FFB800;border-color:rgba(255,184,0,0.3);">
+          <i class="fas fa-map-marker-alt mr-1"></i> Matão-SP
+        </div>
+        <div class="float-anim glass absolute -bottom-5 -left-5 px-3 py-2 rounded-xl text-xs font-cond font-700 tracking-wide"
+             style="font-family:'Barlow Condensed',sans-serif;color:#76C112;animation-delay:2s;">
+          <i class="fas fa-phone-alt mr-1"></i> (044) 9 9153-7877
+        </div>
+        <div class="float-anim glass absolute top-1/2 -left-8 px-3 py-2 rounded-xl text-xs font-cond font-700 tracking-wide"
+             style="font-family:'Barlow Condensed',sans-serif;color:#A8D845;animation-delay:3.5s;">
+          <i class="fas fa-seedling mr-1"></i> +20 anos
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 scroll-indicator" style="color:var(--text-muted);">
+    <span class="font-cond text-xs tracking-widest uppercase" style="font-family:'Barlow Condensed',sans-serif;">Role para baixo</span>
+    <i class="fas fa-chevron-down text-green-bright"></i>
+  </div>
+
+  <!-- Bottom fade -->
+  <div class="absolute bottom-0 left-0 right-0 h-20 pointer-events-none" style="background:linear-gradient(0deg,var(--bg-base),transparent);"></div>
+</section>
+
+<!-- ══════════════════════════════════════
+     MARQUEE
+══════════════════════════════════════ -->
+<div class="green-bar py-3 overflow-hidden">
+  <div class="marquee-track gap-0">
+    <span class="mx-8 font-cond font-700 text-slate-900 text-sm tracking-widest uppercase" style="font-family:'Barlow Condensed',sans-serif;">🌿 São Paulo</span>
+    <span class="mx-8 font-cond font-700 text-slate-900 text-sm tracking-widest uppercase" style="font-family:'Barlow Condensed',sans-serif;">☀️ Paraná</span>
+    <span class="mx-8 font-cond font-700 text-slate-900 text-sm tracking-widest uppercase" style="font-family:'Barlow Condensed',sans-serif;">🌿 Mato Grosso</span>
+    <span class="mx-8 font-cond font-700 text-slate-900 text-sm tracking-widest uppercase" style="font-family:'Barlow Condensed',sans-serif;">☀️ Mato Grosso do Sul</span>
+    <span class="mx-8 font-cond font-700 text-slate-900 text-sm tracking-widest uppercase" style="font-family:'Barlow Condensed',sans-serif;">🌿 Espírito Santo</span>
+    <span class="mx-8 font-cond font-700 text-slate-900 text-sm tracking-widest uppercase" style="font-family:'Barlow Condensed',sans-serif;">☀️ Bahia</span>
+    <span class="mx-8 font-cond font-700 text-slate-900 text-sm tracking-widest uppercase" style="font-family:'Barlow Condensed',sans-serif;">🌿 Rondônia</span>
+    <span class="mx-8 font-cond font-700 text-slate-900 text-sm tracking-widest uppercase" style="font-family:'Barlow Condensed',sans-serif;">🏭 Fabricado em Matão-SP</span>
+    <span class="mx-8 font-cond font-700 text-slate-900 text-sm tracking-widest uppercase" style="font-family:'Barlow Condensed',sans-serif;">🌿 São Paulo</span>
+    <span class="mx-8 font-cond font-700 text-slate-900 text-sm tracking-widest uppercase" style="font-family:'Barlow Condensed',sans-serif;">☀️ Paraná</span>
+    <span class="mx-8 font-cond font-700 text-slate-900 text-sm tracking-widest uppercase" style="font-family:'Barlow Condensed',sans-serif;">🌿 Mato Grosso</span>
+    <span class="mx-8 font-cond font-700 text-slate-900 text-sm tracking-widest uppercase" style="font-family:'Barlow Condensed',sans-serif;">☀️ Mato Grosso do Sul</span>
+    <span class="mx-8 font-cond font-700 text-slate-900 text-sm tracking-widest uppercase" style="font-family:'Barlow Condensed',sans-serif;">🌿 Espírito Santo</span>
+    <span class="mx-8 font-cond font-700 text-slate-900 text-sm tracking-widest uppercase" style="font-family:'Barlow Condensed',sans-serif;">☀️ Bahia</span>
+    <span class="mx-8 font-cond font-700 text-slate-900 text-sm tracking-widest uppercase" style="font-family:'Barlow Condensed',sans-serif;">🌿 Rondônia</span>
+    <span class="mx-8 font-cond font-700 text-slate-900 text-sm tracking-widest uppercase" style="font-family:'Barlow Condensed',sans-serif;">🏭 Fabricado em Matão-SP</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     STATS
+══════════════════════════════════════ -->
+<section class="py-16 px-4 md:px-8" style="background:var(--bg-section);transition:var(--transition-theme);">
+  <div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-5">
+
+    <div class="glass rounded-2xl p-6 text-center fade-up scale-in tilt-card">
+      <p class="stat-num" data-count="20" data-suffix="+">0+</p>
+      <div class="divider-leaf w-12 mx-auto my-2"></div>
+      <p class="font-cond text-sm tracking-wider uppercase stagger-1" style="color:var(--text-muted);font-family:'Barlow Condensed',sans-serif;">Anos de Experiência</p>
+    </div>
+    <div class="glass rounded-2xl p-6 text-center fade-up scale-in tilt-card stagger-2">
+      <p class="stat-num" data-count="8" data-suffix="">0</p>
+      <div class="divider-leaf w-12 mx-auto my-2"></div>
+      <p class="font-cond text-sm tracking-wider uppercase" style="color:var(--text-muted);font-family:'Barlow Condensed',sans-serif;">Estados Atendidos</p>
+    </div>
+    <div class="glass rounded-2xl p-6 text-center fade-up scale-in tilt-card stagger-3">
+      <p class="stat-num" data-count="100" data-suffix="%">0%</p>
+      <div class="divider-leaf w-12 mx-auto my-2"></div>
+      <p class="font-cond text-sm tracking-wider uppercase" style="color:var(--text-muted);font-family:'Barlow Condensed',sans-serif;">Fabricação Nacional</p>
+    </div>
+    <div class="glass rounded-2xl p-6 text-center fade-up scale-in tilt-card stagger-4">
+      <p class="stat-num">∞</p>
+      <div class="divider-leaf w-12 mx-auto my-2"></div>
+      <p class="font-cond text-sm tracking-wider uppercase" style="color:var(--text-muted);font-family:'Barlow Condensed',sans-serif;">Suporte ao Produtor</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     WAVE DIVIDER
+══════════════════════════════════════ -->
+<div class="wave-divider" style="background:var(--bg-section);margin-bottom:-2px;transition:background 0.5s;">
+  <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="width:100%;height:60px;display:block;">
+    <path d="M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30 L1440,60 L0,60 Z" style="fill:var(--bg-base);transition:fill 0.5s;"/>
+  </svg>
+</div>
+
+<!-- ══════════════════════════════════════
+     SOBRE A EMPRESA
+══════════════════════════════════════ -->
+<section id="sobre" class="py-24 px-4 md:px-8" style="background:var(--bg-base);transition:var(--transition-theme);">
+  <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
+
+    <div class="fade-left">
+      <div class="badge-sun inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs mb-6 shadow-lg">
+        <i class="fas fa-industry"></i><span>Quem Somos</span>
+      </div>
+      <h2 class="font-display mb-6" style="font-size:clamp(2.6rem,5.5vw,4.2rem);line-height:1;color:var(--text-primary);">
+        METAL PESADO,<br/>
+        <span class="text-shimmer-green">TRADIÇÃO DO CAMPO.</span>
+      </h2>
+      <div class="divider-leaf w-24 mb-8"></div>
+      <p style="color:var(--text-secondary);line-height:1.8;" class="mb-6">
+        A <strong style="color:var(--text-primary);">MAK-METAL-AGRO</strong> nasceu do chão e da dedicação de quem conhece o campo de perto. Fundada e com fábrica em <strong style="color:#76C112;">Matão – SP</strong>, nossa linha de máquinas agrícolas combina engenharia robusta, aço de alta resistência e tecnologia de ponta para entregar performance real onde o trabalho exige mais.
+      </p>
+      <p style="color:var(--text-secondary);line-height:1.8;" class="mb-10">
+        Do varredor de café ao rolo faca, cada implemento é projetado para resistir às condições mais severas do campo, reduzir custos operacionais e aumentar a produtividade da sua lavoura.
+      </p>
+
+      <!-- Skills/progress bars -->
+      <div class="space-y-5">
+        <div>
+          <div class="flex justify-between mb-2 font-cond font-600 text-sm" style="font-family:'Barlow Condensed',sans-serif;color:var(--text-secondary);">
+            <span>Resistência Estrutural</span><span style="color:#76C112;">98%</span>
+          </div>
+          <div style="background:rgba(118,193,18,0.12);border-radius:99px;height:6px;">
+            <div class="progress-bar skill-bar" style="--target-width:98%;animation-play-state:paused;"></div>
+          </div>
+        </div>
+        <div>
+          <div class="flex justify-between mb-2 font-cond font-600 text-sm" style="font-family:'Barlow Condensed',sans-serif;color:var(--text-secondary);">
+            <span>Cobertura Nacional</span><span style="color:#76C112;">8 Estados</span>
+          </div>
+          <div style="background:rgba(118,193,18,0.12);border-radius:99px;height:6px;">
+            <div class="progress-bar skill-bar" style="--target-width:80%;animation-play-state:paused;"></div>
+          </div>
+        </div>
+        <div>
+          <div class="flex justify-between mb-2 font-cond font-600 text-sm" style="font-family:'Barlow Condensed',sans-serif;color:var(--text-secondary);">
+            <span>Satisfação do Produtor</span><span style="color:#76C112;">100%</span>
+          </div>
+          <div style="background:rgba(118,193,18,0.12);border-radius:99px;height:6px;">
+            <div class="progress-bar skill-bar" style="--target-width:100%;animation-play-state:paused;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature grid -->
+    <div class="grid grid-cols-2 gap-4 fade-right">
+      <div class="feature-card glass rounded-2xl p-6 flex flex-col gap-3 tilt-card stagger-1">
+        <div class="feature-icon w-12 h-12 rounded-xl flex items-center justify-center" style="background:rgba(255,147,0,0.15);">
+          <i class="fas fa-fire-alt text-2xl" style="color:#FF9300;"></i>
+        </div>
+        <h3 class="font-cond text-white text-lg font-700" style="font-family:'Barlow Condensed',sans-serif;color:var(--text-primary);">Robustez Industrial</h3>
+        <p class="text-sm leading-relaxed" style="color:var(--text-muted);">Estrutura em aço carbono pesado com soldagem estrutural que resiste ao trabalho diário intenso.</p>
+      </div>
+      <div class="feature-card glass rounded-2xl p-6 flex flex-col gap-3 tilt-card stagger-2" style="margin-top:2rem;">
+        <div class="feature-icon w-12 h-12 rounded-xl flex items-center justify-center" style="background:rgba(118,193,18,0.15);">
+          <i class="fas fa-seedling text-2xl" style="color:#76C112;"></i>
+        </div>
+        <h3 class="font-cond text-lg font-700" style="font-family:'Barlow Condensed',sans-serif;color:var(--text-primary);">Sustentável</h3>
+        <p class="text-sm leading-relaxed" style="color:var(--text-muted);">Tecnologia que reduz perdas na colheita e otimiza combustível e mão de obra.</p>
+      </div>
+      <div class="feature-card glass rounded-2xl p-6 flex flex-col gap-3 tilt-card stagger-3">
+        <div class="feature-icon w-12 h-12 rounded-xl flex items-center justify-center" style="background:rgba(118,193,18,0.15);">
+          <i class="fas fa-map-marked-alt text-2xl" style="color:#76C112;"></i>
+        </div>
+        <h3 class="font-cond text-lg font-700" style="font-family:'Barlow Condensed',sans-serif;color:var(--text-primary);">Cobertura Nacional</h3>
+        <p class="text-sm leading-relaxed" style="color:var(--text-muted);">Rede de representantes em SP, PR, MS, ES, BA e RO próximos de você.</p>
+      </div>
+      <div class="feature-card glass rounded-2xl p-6 flex flex-col gap-3 tilt-card stagger-4" style="margin-top:2rem;">
+        <div class="feature-icon w-12 h-12 rounded-xl flex items-center justify-center" style="background:rgba(255,147,0,0.15);">
+          <i class="fas fa-tools text-2xl" style="color:#FF9300;"></i>
+        </div>
+        <h3 class="font-cond text-lg font-700" style="font-family:'Barlow Condensed',sans-serif;color:var(--text-primary);">Suporte Técnico</h3>
+        <p class="text-sm leading-relaxed" style="color:var(--text-muted);">Equipe especializada — você nunca fica parado na hora mais crítica.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     WAVE 2
+══════════════════════════════════════ -->
+<div style="background:var(--bg-base);transition:background 0.5s;">
+  <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="width:100%;height:60px;display:block;">
+    <path d="M0,30 C360,0 720,60 1080,30 C1260,15 1380,45 1440,30 L1440,60 L0,60 Z" style="fill:var(--bg-section);transition:fill 0.5s;"/>
+  </svg>
+</div>
+
+<!-- ══════════════════════════════════════
+     VITRINE DE IMPLEMENTOS
+══════════════════════════════════════ -->
+<section id="produtos" style="background:var(--bg-section);transition:var(--transition-theme);" class="py-24 px-4 md:px-8">
+  <div class="max-w-7xl mx-auto">
+
+    <div class="text-center mb-16 fade-up">
+      <div class="badge-sun inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs mb-6">
+        <i class="fas fa-tractor"></i><span>Linha de Produtos</span>
+      </div>
+      <h2 class="font-display section-title-bar mb-2" style="font-size:clamp(2.4rem,5vw,4rem);line-height:1.05;color:var(--text-primary);">
+        IMPLEMENTOS QUE <span class="text-shimmer-green">TRABALHAM</span><br/>TANTO QUANTO VOCÊ
+      </h2>
+      <div class="divider-leaf w-24 mx-auto mt-6"></div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <!-- Card 1 -->
+      <div class="product-card rounded-2xl fade-up tilt-card stagger-1">
+        <div class="img-wrap h-52 relative">
+          <img src="implemento-varredor-cafe.jpg"
+               alt="MAK 230 Varredor e Rodador de Café — máquina laranja robusta acoplada em trator, braços articulados de coleta em lavoura de café, céu azul ao fundo, visão lateral"
+               onerror="this.parentElement.innerHTML='<div style=\'height:100%;background:linear-gradient(135deg,#0e1f0a,#1e3a10);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;\'><i class=\'fas fa-tractor\' style=\'font-size:3rem;color:#76C112;opacity:0.4;\'></i><span style=\'color:rgba(118,193,18,0.35);font-size:0.75rem;font-family:Barlow Condensed,sans-serif;letter-spacing:0.1em;\'>MAK 230</span></div>'"/>
+          <div class="absolute top-3 left-3"><span class="tag">Destaque</span></div>
+          <div class="absolute inset-0" style="background:linear-gradient(0deg,rgba(0,0,0,0.5) 0%,transparent 50%);pointer-events:none;"></div>
+        </div>
+        <div class="p-5">
+          <h3 class="font-cond font-700 mb-2 text-xl" style="font-family:'Barlow Condensed',sans-serif;color:var(--text-primary);">MAK 230 — Varredor e Rodador de Café</h3>
+          <p class="text-sm leading-relaxed mb-5" style="color:var(--text-muted);">Coleta e roda os grãos no terreiro com máxima eficiência. Reduz perdas e elimina trabalho braçal excessivo na pós-colheita.</p>
+          <a href="https://wa.me/5544991537877?text=Olá!%20Tenho%20interesse%20no%20MAK%20230%20Varredor%20de%20Café" target="_blank"
+             class="btn-wpp flex items-center justify-center gap-2 w-full py-3 rounded-xl text-sm">
+            <i class="fab fa-whatsapp"></i> Solicitar Orçamento
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="product-card rounded-2xl fade-up tilt-card stagger-2">
+        <div class="img-wrap h-52 relative">
+          <img src="implemento-chegador-ciscos.jpg"
+               alt="Chegador de Ciscos e Arruador MAK-METAL-AGRO — implemento laranja e preto de lâmina dianteira em mini trator separando folhas dos grãos no terreiro de café, visão lateral"
+               onerror="this.parentElement.innerHTML='<div style=\'height:100%;background:linear-gradient(135deg,#0e1f0a,#1e3a10);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;\'><i class=\'fas fa-tractor\' style=\'font-size:3rem;color:#76C112;opacity:0.4;\'></i><span style=\'color:rgba(118,193,18,0.35);font-size:0.75rem;font-family:Barlow Condensed,sans-serif;letter-spacing:0.1em;\'>CHEGADOR</span></div>'"/>
+          <div class="absolute top-3 left-3"><span class="tag">Cafeicultura</span></div>
+          <div class="absolute inset-0" style="background:linear-gradient(0deg,rgba(0,0,0,0.5) 0%,transparent 50%);pointer-events:none;"></div>
+        </div>
+        <div class="p-5">
+          <h3 class="font-cond font-700 mb-2 text-xl" style="font-family:'Barlow Condensed',sans-serif;color:var(--text-primary);">Chegador de Ciscos e Arruador</h3>
+          <p class="text-sm leading-relaxed mb-5" style="color:var(--text-muted);">Separa galhos, folhas e impurezas dos grãos no terreiro, garantindo qualidade na secagem e minimizando retrabalho.</p>
+          <a href="https://wa.me/5544991537877?text=Olá!%20Tenho%20interesse%20no%20Chegador%20de%20Ciscos" target="_blank"
+             class="btn-wpp flex items-center justify-center gap-2 w-full py-3 rounded-xl text-sm">
+            <i class="fab fa-whatsapp"></i> Solicitar Orçamento
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="product-card rounded-2xl fade-up tilt-card stagger-3">
+        <div class="img-wrap h-52 relative">
+          <img src="implemento-rocadeira.jpg"
+               alt="Roçadeira de discos MAK-METAL-AGRO — conjunto de discos circulares de corte laranja em operação, estrutura metálica robusta, vista frontal mostrando múltiplos discos alinhados em galpão industrial"
+               onerror="this.parentElement.innerHTML='<div style=\'height:100%;background:linear-gradient(135deg,#0e1f0a,#1e3a10);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;\'><i class=\'fas fa-tractor\' style=\'font-size:3rem;color:#76C112;opacity:0.4;\'></i><span style=\'color:rgba(118,193,18,0.35);font-size:0.75rem;font-family:Barlow Condensed,sans-serif;letter-spacing:0.1em;\'>ROÇADEIRA</span></div>'"/>
+          <div class="absolute top-3 left-3"><span class="tag">Alta Performance</span></div>
+          <div class="absolute inset-0" style="background:linear-gradient(0deg,rgba(0,0,0,0.5) 0%,transparent 50%);pointer-events:none;"></div>
+        </div>
+        <div class="p-5">
+          <h3 class="font-cond font-700 mb-2 text-xl" style="font-family:'Barlow Condensed',sans-serif;color:var(--text-primary);">Roçadeira de Discos</h3>
+          <p class="text-sm leading-relaxed mb-5" style="color:var(--text-muted);">Controle de cobertura vegetal entre linhas. Corte limpo e estrutura que suporta terrenos acidentados e pedregosos.</p>
+          <a href="https://wa.me/5544991537877?text=Olá!%20Tenho%20interesse%20na%20Roçadeira" target="_blank"
+             class="btn-wpp flex items-center justify-center gap-2 w-full py-3 rounded-xl text-sm">
+            <i class="fab fa-whatsapp"></i> Solicitar Orçamento
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="product-card rounded-2xl fade-up tilt-card stagger-4">
+        <div class="img-wrap h-52 relative">
+          <img src="implemento-colhedora.jpg"
+               alt="Colhedora de café MAK-METAL-AGRO em operação — fileira de máquinas percorrendo lavoura de café verde, visão aérea com dois tratores e colhedoras trabalhando em paralelo"
+               onerror="this.parentElement.innerHTML='<div style=\'height:100%;background:linear-gradient(135deg,#0e1f0a,#1e3a10);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;\'><i class=\'fas fa-tractor\' style=\'font-size:3rem;color:#76C112;opacity:0.4;\'></i><span style=\'color:rgba(118,193,18,0.35);font-size:0.75rem;font-family:Barlow Condensed,sans-serif;letter-spacing:0.1em;\'>COLHEDORA</span></div>'"/>
+          <div class="absolute top-3 left-3"><span class="tag">Colheita</span></div>
+          <div class="absolute inset-0" style="background:linear-gradient(0deg,rgba(0,0,0,0.5) 0%,transparent 50%);pointer-events:none;"></div>
+        </div>
+        <div class="p-5">
+          <h3 class="font-cond font-700 mb-2 text-xl" style="font-family:'Barlow Condensed',sans-serif;color:var(--text-primary);">Colhedora de Café</h3>
+          <p class="text-sm leading-relaxed mb-5" style="color:var(--text-muted);">Colheita mecanizada de alto desempenho. Reduz custo por saca e aumenta a rentabilidade da safra.</p>
+          <a href="https://wa.me/5544991537877?text=Olá!%20Tenho%20interesse%20na%20Colhedora%20de%20Café" target="_blank"
+             class="btn-wpp flex items-center justify-center gap-2 w-full py-3 rounded-xl text-sm">
+            <i class="fab fa-whatsapp"></i> Solicitar Orçamento
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="product-card rounded-2xl fade-up tilt-card stagger-5">
+        <div class="img-wrap h-52 relative">
+          <img src="implemento-derricadeira.jpg"
+               alt="Derriçadeira de café MAK-METAL-AGRO — hastes vibratórias laranja acopladas em trator entre ruas de café carregado de frutos vermelhos maduros, terreno inclinado, fim de tarde"
+               onerror="this.parentElement.innerHTML='<div style=\'height:100%;background:linear-gradient(135deg,#0e1f0a,#1e3a10);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;\'><i class=\'fas fa-tractor\' style=\'font-size:3rem;color:#76C112;opacity:0.4;\'></i><span style=\'color:rgba(118,193,18,0.35);font-size:0.75rem;font-family:Barlow Condensed,sans-serif;letter-spacing:0.1em;\'>DERRIÇADEIRA</span></div>'"/>
+          <div class="absolute top-3 left-3"><span class="tag">Café</span></div>
+          <div class="absolute inset-0" style="background:linear-gradient(0deg,rgba(0,0,0,0.5) 0%,transparent 50%);pointer-events:none;"></div>
+        </div>
+        <div class="p-5">
+          <h3 class="font-cond font-700 mb-2 text-xl" style="font-family:'Barlow Condensed',sans-serif;color:var(--text-primary);">Derriçadeira de Café</h3>
+          <p class="text-sm leading-relaxed mb-5" style="color:var(--text-muted);">Derrição lateral suave e eficiente, preservando a planta e garantindo alta porcentagem de frutos colhidos.</p>
+          <a href="https://wa.me/5544991537877?text=Olá!%20Tenho%20interesse%20na%20Derriçadeira%20de%20Café" target="_blank"
+             class="btn-wpp flex items-center justify-center gap-2 w-full py-3 rounded-xl text-sm">
+            <i class="fab fa-whatsapp"></i> Solicitar Orçamento
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 6: CTA -->
+      <div class="product-card rounded-2xl fade-up tilt-card stagger-6" style="background:linear-gradient(135deg,rgba(0,108,24,0.15),rgba(118,193,18,0.08));">
+        <div class="h-52 flex flex-col items-center justify-center gap-4 px-6 text-center">
+          <div class="w-16 h-16 rounded-2xl flex items-center justify-center float-anim" style="background:linear-gradient(135deg,#FF7800,#FFB800);">
+            <i class="fas fa-search text-slate-900 text-2xl"></i>
+          </div>
+          <div>
+            <h3 class="font-cond font-700 text-xl" style="font-family:'Barlow Condensed',sans-serif;color:var(--text-primary);">Não encontrou?</h3>
+            <p class="text-sm mt-1" style="color:var(--text-muted);">Temos linha completa para diversas culturas.</p>
+          </div>
+        </div>
+        <div class="p-5">
+          <p class="text-sm leading-relaxed mb-5" style="color:var(--text-secondary);">Fale com nosso especialista. Analisamos sua necessidade e indicamos o implemento ideal para sua lavoura.</p>
+          <a href="https://wa.me/5544991537877?text=Olá!%20Gostaria%20de%20conhecer%20mais%20produtos%20MAK-METAL-AGRO" target="_blank"
+             class="btn-wpp flex items-center justify-center gap-2 w-full py-3 rounded-xl text-sm">
+            <i class="fab fa-whatsapp"></i> Consultar Catálogo Completo
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     WAVE 3
+══════════════════════════════════════ -->
+<div style="background:var(--bg-section);transition:background 0.5s;">
+  <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="width:100%;height:60px;display:block;">
+    <path d="M0,0 C480,60 960,0 1440,40 L1440,60 L0,60 Z" style="fill:var(--bg-base);transition:fill 0.5s;"/>
+  </svg>
+</div>
+
+<!-- ══════════════════════════════════════
+     DIFERENCIAIS
+══════════════════════════════════════ -->
+<section id="diferenciais" class="py-24 px-4 md:px-8" style="background:var(--bg-base);transition:var(--transition-theme);">
+  <div class="max-w-7xl mx-auto">
+
+    <div class="text-center mb-16 fade-up">
+      <div class="badge-sun inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs mb-6">
+        <i class="fas fa-star"></i><span>Por Que MAK-METAL-AGRO</span>
+      </div>
+      <h2 class="font-display" style="font-size:clamp(2.4rem,5vw,4rem);line-height:1.05;color:var(--text-primary);">
+        O CAMPO EXIGE O MELHOR.<br/><span class="text-shimmer-green">NÓS ENTREGAMOS.</span>
+      </h2>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <div class="feature-card glass rounded-2xl p-7 fade-up tilt-card stagger-1" style="border-color:var(--border-card);">
+        <div class="feature-icon w-14 h-14 rounded-2xl flex items-center justify-center mb-5" style="background:rgba(255,120,0,0.15);">
+          <i class="fas fa-hammer text-2xl" style="color:#FF9300;"></i>
+        </div>
+        <h3 class="font-cond font-700 mb-3 text-xl" style="font-family:'Barlow Condensed',sans-serif;color:var(--text-primary);">Construção em Aço Pesado</h3>
+        <p class="text-sm leading-relaxed" style="color:var(--text-muted);">Perfis e chapas de aço estrutural de alta resistência com soldagem certificada — integridade em qualquer operação.</p>
+      </div>
+
+      <div class="feature-card glass rounded-2xl p-7 fade-up tilt-card stagger-2" style="border-color:var(--border-card);">
+        <div class="feature-icon w-14 h-14 rounded-2xl flex items-center justify-center mb-5" style="background:rgba(118,193,18,0.15);">
+          <i class="fas fa-microchip text-2xl" style="color:#76C112;"></i>
+        </div>
+        <h3 class="font-cond font-700 mb-3 text-xl" style="font-family:'Barlow Condensed',sans-serif;color:var(--text-primary);">Tecnologia de Colheita</h3>
+        <p class="text-sm leading-relaxed" style="color:var(--text-muted);">Sistemas de derrição, varredura e separação projetados para minimizar perdas e maximizar qualidade final.</p>
+      </div>
+
+      <div class="feature-card glass rounded-2xl p-7 fade-up tilt-card stagger-3" style="border-color:var(--border-card);">
+        <div class="feature-icon w-14 h-14 rounded-2xl flex items-center justify-center mb-5" style="background:rgba(255,120,0,0.15);">
+          <i class="fas fa-map-marker-alt text-2xl" style="color:#FF9300;"></i>
+        </div>
+        <h3 class="font-cond font-700 mb-3 text-xl" style="font-family:'Barlow Condensed',sans-serif;color:var(--text-primary);">Fábrica em Matão-SP</h3>
+        <p class="text-sm leading-relaxed" style="color:var(--text-muted);">Fundada e produzindo em Matão-SP com representantes em SP, PR, MS, ES, BA e RO. Tecnologia brasileira para o campo brasileiro.</p>
+      </div>
+
+      <div class="feature-card glass rounded-2xl p-7 fade-up tilt-card stagger-4" style="border-color:var(--border-card);">
+        <div class="feature-icon w-14 h-14 rounded-2xl flex items-center justify-center mb-5" style="background:rgba(118,193,18,0.15);">
+          <i class="fas fa-tools text-2xl" style="color:#76C112;"></i>
+        </div>
+        <h3 class="font-cond font-700 mb-3 text-xl" style="font-family:'Barlow Condensed',sans-serif;color:var(--text-primary);">Manutenção Facilitada</h3>
+        <p class="text-sm leading-relaxed" style="color:var(--text-muted);">Fácil acesso a peças de desgaste e reposição rápida. Sua máquina não para na hora errada.</p>
+      </div>
+
+      <div class="feature-card glass rounded-2xl p-7 fade-up tilt-card stagger-5" style="border-color:var(--border-card);">
+        <div class="feature-icon w-14 h-14 rounded-2xl flex items-center justify-center mb-5" style="background:rgba(255,120,0,0.15);">
+          <i class="fas fa-sun text-2xl" style="color:#FF9300;"></i>
+        </div>
+        <h3 class="font-cond font-700 mb-3 text-xl" style="font-family:'Barlow Condensed',sans-serif;color:var(--text-primary);">De Sol a Sol, na Lavoura</h3>
+        <p class="text-sm leading-relaxed" style="color:var(--text-muted);">Construídas para os ritmos do produtor: resistem à poeira, ao calor e às jornadas mais longas.</p>
+      </div>
+
+      <div class="feature-card glass rounded-2xl p-7 fade-up tilt-card stagger-6" style="border-color:var(--border-card);">
+        <div class="feature-icon w-14 h-14 rounded-2xl flex items-center justify-center mb-5" style="background:rgba(118,193,18,0.15);">
+          <i class="fas fa-chart-line text-2xl" style="color:#76C112;"></i>
+        </div>
+        <h3 class="font-cond font-700 mb-3 text-xl" style="font-family:'Barlow Condensed',sans-serif;color:var(--text-primary);">Retorno sobre Investimento</h3>
+        <p class="text-sm leading-relaxed" style="color:var(--text-muted);">Cada implemento MAK se paga rápido. Economize em mão de obra, tempo e perdas já na primeira safra.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     CTA FINAL — SUNRISE
+══════════════════════════════════════ -->
+<section id="contato" class="sunrise-bg relative py-28 px-4 md:px-8 overflow-hidden">
+
+  <!-- Animated horizon glow -->
+  <div class="absolute top-0 left-0 right-0 h-px" style="background:linear-gradient(90deg,transparent,rgba(255,184,0,0.4),transparent);"></div>
+  <div class="absolute top-0 left-1/2 -translate-x-1/2 pointer-events-none" style="width:900px;height:350px;background:radial-gradient(ellipse,rgba(255,120,0,0.12) 0%,rgba(255,184,0,0.06) 40%,transparent 70%);"></div>
+
+  <!-- Floating particles in CTA -->
+  <div id="cta-particles" class="absolute inset-0 pointer-events-none overflow-hidden"></div>
+
+  <div class="relative z-10 max-w-4xl mx-auto text-center">
+
+    <!-- Animated sun -->
+    <div class="flex justify-center mb-8">
+      <svg viewBox="0 0 140 95" class="w-36 h-24 sun-glow-anim float-anim" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="ctaSun2" cx="50%" cy="80%" r="70%">
+            <stop offset="0%" stop-color="#FF7800"/><stop offset="100%" stop-color="#FFB800"/>
+          </radialGradient>
+        </defs>
+        <g stroke="#FFB800" stroke-width="2.2" stroke-linecap="round" opacity="0.75" style="transform-origin:70px 60px;" class="sun-rotate">
+          <line x1="70" y1="5"  x2="70" y2="18"/>
+          <line x1="105" y1="14" x2="98" y2="25"/>
+          <line x1="128" y1="44" x2="115" y2="48"/>
+          <line x1="35"  y1="14" x2="42" y2="25"/>
+          <line x1="12"  y1="44" x2="25" y2="48"/>
+          <line x1="118" y1="24" x2="110" y2="33"/>
+          <line x1="22"  y1="24" x2="30" y2="33"/>
+        </g>
+        <path d="M18 70 Q70 38 122 70 Z" fill="url(#ctaSun2)"/>
+        <ellipse cx="70" cy="69" rx="52" ry="22" fill="url(#ctaSun2)"/>
+        <path d="M8 82 Q40 72 70 82 Q100 92 132 82" stroke="#76C112" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M8 90 Q40 80 70 90 Q100 100 132 90" stroke="#A8D845" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.6"/>
+      </svg>
+    </div>
+
+    <h2 class="font-display mb-5 fade-up" style="font-size:clamp(2.8rem,7vw,5.5rem);line-height:1;color:var(--text-primary);">
+      PRONTO PARA <span class="text-shimmer-green">PRODUZIR</span><br/>
+      <span class="text-shimmer">MAIS E MELHOR?</span>
+    </h2>
+
+    <div class="divider-leaf w-24 mx-auto my-8 fade-up"></div>
+
+    <p class="font-cond text-xl leading-relaxed max-w-2xl mx-auto mb-10 fade-up" style="color:var(--text-secondary);font-family:'Barlow Condensed',sans-serif;">
+      Fale com um dos nossos especialistas, descreva sua lavoura e descubra qual implemento <strong style="color:var(--text-primary);">MAK-METAL-AGRO</strong> vai transformar a sua produtividade nesta safra.
+    </p>
+
+    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12 fade-up">
+      <a href="https://wa.me/5544991537877?text=Olá!%20Quero%20conhecer%20as%20máquinas%20MAK-METAL-AGRO%20e%20fazer%20um%20orçamento." target="_blank" rel="noopener"
+         class="btn-wpp flex items-center gap-3 px-8 py-5 rounded-xl w-full sm:w-auto justify-center" style="font-size:1.1rem;">
+        <i class="fab fa-whatsapp text-2xl"></i>
+        Fazer Orçamento Agora
+      </a>
+      <a href="tel:+5544991537877" class="btn-outline flex items-center gap-3 px-8 py-5 rounded-xl w-full sm:w-auto justify-center" style="font-size:1.1rem;">
+        <i class="fas fa-phone-alt"></i>
+        (044) 9 9153-7877
+      </a>
+    </div>
+
+    <!-- Contact pills -->
+    <div class="flex flex-wrap justify-center gap-4 text-sm fade-up">
+      <div class="glass rounded-xl px-5 py-3 flex items-center gap-3">
+        <i class="fas fa-user" style="color:#76C112;"></i>
+        <span class="font-cond font-600 tracking-wide" style="font-family:'Barlow Condensed',sans-serif;color:var(--text-secondary);">REIS — Consultor</span>
+      </div>
+      <div class="glass rounded-xl px-5 py-3 flex items-center gap-3">
+        <i class="fas fa-map-marker-alt" style="color:#FF9300;"></i>
+        <span class="font-cond font-600 tracking-wide" style="font-family:'Barlow Condensed',sans-serif;color:var(--text-secondary);">Matão – SP · Brasil</span>
+      </div>
+      <div class="glass rounded-xl px-5 py-3 flex items-center gap-3">
+        <i class="fas fa-clock" style="color:#76C112;"></i>
+        <span class="font-cond font-600 tracking-wide" style="font-family:'Barlow Condensed',sans-serif;color:var(--text-secondary);">Seg–Sáb, 7h às 18h</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="absolute bottom-0 left-0 right-0 h-px" style="background:linear-gradient(90deg,transparent,rgba(118,193,18,0.3),transparent);"></div>
+</section>
+
+<!-- ══════════════════════════════════════
+     FOOTER
+══════════════════════════════════════ -->
+<footer style="background:var(--footer-bg);border-top:1px solid var(--border-card);transition:var(--transition-theme);" class="py-10 px-4 md:px-8">
+  <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+    <div class="flex items-center gap-3">
+      <svg viewBox="0 0 60 60" class="w-10 h-10 sun-glow-anim" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs><radialGradient id="fSunG2" cx="50%" cy="100%" r="80%"><stop offset="0%" stop-color="#FF7800"/><stop offset="100%" stop-color="#FFB800"/></radialGradient></defs>
+        <g stroke="#FFB800" stroke-width="2" stroke-linecap="round" opacity="0.7" class="sun-rotate">
+          <line x1="30" y1="4" x2="30" y2="10"/><line x1="49" y1="11" x2="45" y2="15"/>
+          <line x1="11" y1="11" x2="15" y2="15"/>
+        </g>
+        <path d="M10 38 Q30 16 50 38 Z" fill="url(#fSunG2)"/>
+        <ellipse cx="30" cy="37" rx="20" ry="8" fill="url(#fSunG2)"/>
+        <path d="M8 44 Q20 40 30 44 Q40 48 52 44" stroke="#76C112" stroke-width="2" fill="none" stroke-linecap="round"/>
+      </svg>
+      <div>
+        <p class="font-display text-base tracking-wider" style="color:var(--text-primary);">MAK-METAL-AGRO</p>
+        <p class="font-cond text-xs tracking-widest uppercase" style="color:#76C112;opacity:0.8;font-family:'Barlow Condensed',sans-serif;">Máquinas Agrícolas · Matão-SP</p>
+      </div>
+    </div>
+    <div class="flex flex-wrap gap-6 text-sm font-cond font-600 tracking-wide uppercase" style="font-family:'Barlow Condensed',sans-serif;color:var(--text-muted);">
+      <a href="#sobre"        class="hover:text-green-bright transition-colors" style="text-decoration:none;">Sobre</a>
+      <a href="#produtos"     class="hover:text-green-bright transition-colors" style="text-decoration:none;">Produtos</a>
+      <a href="#diferenciais" class="hover:text-green-bright transition-colors" style="text-decoration:none;">Diferenciais</a>
+      <a href="https://wa.me/5544991537877" target="_blank" class="hover:text-green-bright transition-colors" style="text-decoration:none;">Contato</a>
+    </div>
+    <div class="flex flex-col items-center md:items-end gap-2">
+      <a href="https://wa.me/5544991537877" target="_blank" class="flex items-center gap-2 text-sm font-cond font-600 tracking-wide" style="color:#25D366;text-decoration:none;font-family:'Barlow Condensed',sans-serif;">
+        <i class="fab fa-whatsapp"></i> (044) 9 9153-7877
+      </a>
+      <p class="text-xs font-cond tracking-wide" style="color:var(--text-muted);font-family:'Barlow Condensed',sans-serif;">
+        © 2025 MAK-METAL-AGRO · Matão-SP · Todos os direitos reservados.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════ -->
+<script>
+/* ─────────────────────────────────────
+   THEME SYSTEM
+───────────────────────────────────── */
+let currentTheme = localStorage.getItem('mak-theme') || 'dark';
+const mq = window.matchMedia('(prefers-color-scheme: light)');
+
+function applyTheme(t) {
+  const resolved = t === 'auto' ? (mq.matches ? 'light' : 'dark') : t;
+  document.documentElement.setAttribute('data-theme', resolved);
+  ['dark','light','auto'].forEach(id => {
+    const btn = document.getElementById('btn-'+id);
+    if (btn) btn.classList.toggle('active', id === t);
+  });
+}
+function setTheme(t) {
+  currentTheme = t;
+  localStorage.setItem('mak-theme', t);
+  applyTheme(t);
+}
+mq.addEventListener('change', () => { if (currentTheme === 'auto') applyTheme('auto'); });
+applyTheme(currentTheme);
+
+/* ─────────────────────────────────────
+   SCROLL ANIMATIONS (IntersectionObserver)
+───────────────────────────────────── */
+const ioOpts = { threshold: 0.1, rootMargin:'0px 0px -40px 0px' };
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      // Trigger skill bars
+      e.target.querySelectorAll && e.target.querySelectorAll('.skill-bar').forEach(bar => {
+        bar.style.animationPlayState = 'running';
+      });
+      io.unobserve(e.target);
+    }
+  });
+}, ioOpts);
+
+// Section title bar underline
+const titleObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); titleObs.unobserve(e.target); }});
+}, { threshold: 0.5 });
+document.querySelectorAll('.section-title-bar').forEach(el => titleObs.observe(el));
+
+document.querySelectorAll('.fade-up,.fade-left,.fade-right,.scale-in').forEach(el => io.observe(el));
+
+// Skill bars observer
+const skillObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.skill-bar').forEach(bar => {
+        bar.style.animationPlayState = 'running';
+      });
+      skillObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.2 });
+document.querySelectorAll('#sobre').forEach(s => skillObs.observe(s));
+
+/* ─────────────────────────────────────
+   COUNTER ANIMATION
+───────────────────────────────────── */
+function animateCounter(el) {
+  const target = parseInt(el.dataset.count);
+  const suffix = el.dataset.suffix || '';
+  const dur = 1800;
+  const step = 16;
+  const inc = target / (dur / step);
+  let cur = 0;
+  const t = setInterval(() => {
+    cur = Math.min(cur + inc, target);
+    el.textContent = Math.floor(cur) + suffix;
+    if (cur >= target) clearInterval(t);
+  }, step);
+}
+const counterObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('[data-count]').forEach(animateCounter);
+      counterObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.3 });
+document.querySelectorAll('.stat-num').forEach(el => counterObs.observe(el.parentElement));
+
+/* ─────────────────────────────────────
+   PARTICLES
+───────────────────────────────────── */
+function createParticles(containerId, count, options = {}) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  for (let i = 0; i < count; i++) {
+    const p = document.createElement('div');
+    const size = options.size || (Math.random() * 4 + 2);
+    const x = Math.random() * 100;
+    const y = Math.random() * 100;
+    const dur = Math.random() * 8 + 5;
+    const delay = Math.random() * -10;
+    const dx = (Math.random() - 0.5) * 60;
+    const dy = (Math.random() - 0.5) * 60;
+    const color = options.colors
+      ? options.colors[Math.floor(Math.random() * options.colors.length)]
+      : `rgba(118,193,18,${Math.random() * 0.4 + 0.1})`;
+    p.style.cssText = `
+      position:absolute;
+      left:${x}%;top:${y}%;
+      width:${size}px;height:${size}px;
+      border-radius:50%;
+      background:${color};
+      --dx:${dx}px;--dy:${dy}px;--dur:${dur}s;
+      animation:particleDrift ${dur}s ease-in-out ${delay}s infinite;
+    `;
+    container.appendChild(p);
+  }
+}
+
+createParticles('hero-particles', 30, {
+  colors: [
+    'rgba(118,193,18,0.25)','rgba(168,216,69,0.2)',
+    'rgba(255,184,0,0.2)','rgba(255,120,0,0.15)'
+  ]
+});
+createParticles('cta-particles', 20, {
+  colors: ['rgba(255,184,0,0.2)','rgba(255,120,0,0.15)','rgba(118,193,18,0.2)']
+});
+
+/* ─────────────────────────────────────
+   TILT CARDS (mouse parallax)
+───────────────────────────────────── */
+document.querySelectorAll('.tilt-card').forEach(card => {
+  card.addEventListener('mousemove', (e) => {
+    const r = card.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width  - 0.5;
+    const y = (e.clientY - r.top)  / r.height - 0.5;
+    card.style.transform = `perspective(800px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg) translateY(-4px) scale(1.01)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = '';
+    card.style.transition = 'transform 0.5s ease';
+  });
+  card.addEventListener('mouseenter', () => {
+    card.style.transition = 'transform 0.1s ease';
+  });
+});
+
+/* ─────────────────────────────────────
+   STICKY HEADER shadow on scroll
+───────────────────────────────────── */
+window.addEventListener('scroll', () => {
+  const header = document.querySelector('header');
+  if (window.scrollY > 30) {
+    header.style.boxShadow = '0 4px 30px rgba(0,0,0,0.25)';
+  } else {
+    header.style.boxShadow = 'none';
+  }
+}, { passive: true });
+
+/* ─────────────────────────────────────
+   FEATURE CARD ICON BOUNCE
+───────────────────────────────────── */
+document.querySelectorAll('.feature-card').forEach(card => {
+  card.addEventListener('mouseenter', () => {
+    const icon = card.querySelector('.feature-icon');
+    if (icon) { icon.style.animation = 'iconBounce 0.6s ease'; }
+  });
+  card.addEventListener('mouseleave', () => {
+    const icon = card.querySelector('.feature-icon');
+    if (icon) { icon.style.animation = ''; }
+  });
+});
+
+/* ─────────────────────────────────────
+   SMOOTH ANCHOR NAV
+───────────────────────────────────── */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+</script>
+</body>
+</html>
